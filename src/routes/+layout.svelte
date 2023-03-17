@@ -5,10 +5,10 @@
   import Header from './componentes/Header.svelte';
   import Footer from './componentes/Footer.svelte';
 
-  let numerofinal = Number($count)
+  $: numerical = Number($count)
   
   function retorna() {
-    $count0 += numerofinal;
+    $count0 = numerical;
   }
 
   let menuLiberado = false;
@@ -55,7 +55,7 @@
   <!-- Conteúdo -->
   <main>
     
-    <button on:click={count0.voltar}>{$count} Clicando aqui, a pessoa volta pra página de onde parou (ainda a ser implementado)</button>
+    <button on:click={retorna}>{$count} Clicando aqui, a pessoa volta pra página de onde parou (ainda a ser implementado)</button>
     
     <h1>Olá {$nomeAluno}, seja bem vindo!</h1>
     <h2>Número da Página: {$count0} || Anterior Salva: {$count}</h2>

@@ -5,7 +5,9 @@ import { browser } from "$app/environment";
 export const nomeAluno = writable(
   (browser && localStorage.getItem("nomeAluno"))
 );
-nomeAluno.subscribe((val) => browser && (localStorage.nomeAluno = val));
+export const pagSalva = writable(
+	(browser && localStorage.getItem("pagina"))
+);
 
 // Nome do Aluno
 function createCount() {
@@ -16,16 +18,17 @@ function createCount() {
 		increment: () => update(n => n + 1),
 		decrement: () => update(n => n - 1),
 		reset: () => set(0),
-		voltar: () => set(Number(countFinal))
+		intro: () => set(1),
+		voltar: () => set(Number(salvarPagina))
 	};
 }
 
-export const count0 = createCount();
+export const pagina = createCount();
+export const salvarPagina = get(pagSalva);
 
-export const count = writable((browser && localStorage.getItem("count0")));
-count0.subscribe((val) => browser && (localStorage.count0 = val));
+nomeAluno.subscribe((val) => browser && (localStorage.nomeAluno = val));
+pagina.subscribe((val) => browser && (localStorage.pagina = val));
 
-export const countFinal = get(count);
 
 
 

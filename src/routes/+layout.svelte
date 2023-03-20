@@ -1,9 +1,10 @@
 <script>
-	import './css/style.css';
-	import { fade } from 'svelte/transition';
-  import { nomeAluno, count, count0, } from './stores';
+	import './style.css';
+	import { fade,fly } from 'svelte/transition';
+  import { nomeAluno, count, count0, countFinal } from './stores';
   import Header from './componentes/Header.svelte';
   import Footer from './componentes/Footer.svelte';
+  import Progresso from './componentes/Progresso.svelte';
 
   $: numerical = Number($count)
   
@@ -15,7 +16,7 @@
 
 </script>
 
-<div class="app">
+<Progresso />
   
   <!-- Header, logo, Título, Capítulo, etc.-->
   <Header />
@@ -34,11 +35,14 @@
   <!-- Menu Principal Aberto -->
   {#if menuLiberado}
     <nav class="principal" in:fade="{{ duration: 200 }}" out:fade="{{ duration: 80 }}">
-      <div>
-        <h1>Nome: {$nomeAluno}</h1>
+      <div class="caixaMenu" in:fly="{{ y: 200, delay: 100, duration: 400}}">
+        <h1>Olá {$nomeAluno},</h1>
+        <h2>Altere seu nome na caixa abaixo:</h2>
         <input type="text" bind:value={$nomeAluno}>
   
-        <button class="fechar" on:click={() => (menuLiberado = !menuLiberado)}>FECHAR</button>
+        <button class="fechar" in:fade="{{ delay: 500, duration: 200 }}" on:click={() => (menuLiberado = !menuLiberado)}>FECHAR</button>
+
+        <h2>Navegue pelo menu:</h2>
   
         <ul>
           <li><a on:click={() => (menuLiberado = !menuLiberado)} href="/">Home</a></li>
@@ -55,7 +59,7 @@
   <!-- Conteúdo -->
   <main>
     
-    <button on:click={retorna}>{$count} Clicando aqui, a pessoa volta pra página de onde parou (ainda a ser implementado)</button>
+    <button on:click={count0.voltar}>{$count} Clicando aqui, a pessoa volta pra página de onde parou (implementado!)</button>countFinal {countFinal}
     
     <h1>Olá {$nomeAluno}, seja bem vindo!</h1>
     <h2>Número da Página: {$count0} || Anterior Salva: {$count}</h2>
@@ -65,17 +69,8 @@
   </main>
   
   <Footer />
-</div>
 
 <style>
-  
-	.app {
-		display: flex;
-		flex-direction: column;
-		min-height: 100vh;
-    background-color: rgba(49,221,244, .4);
-    border: 1px solid rgba(49,221,244, 1);
-  }
 
 main {
 		flex: 1;

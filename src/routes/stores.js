@@ -1,4 +1,4 @@
-import { writable } from "svelte/store";
+import { writable, get } from "svelte/store";
 import { browser } from "$app/environment";
 
 // Nome do Aluno
@@ -16,7 +16,7 @@ function createCount() {
 		increment: () => update(n => n + 1),
 		decrement: () => update(n => n - 1),
 		reset: () => set(0),
-		voltar: () => set(countFinal)
+		voltar: () => set(Number(countFinal))
 	};
 }
 
@@ -25,7 +25,7 @@ export const count0 = createCount();
 export const count = writable((browser && localStorage.getItem("count0")));
 count0.subscribe((val) => browser && (localStorage.count0 = val));
 
-export const countFinal = 25;
+export const countFinal = get(count);
 
 
 
